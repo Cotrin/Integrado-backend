@@ -12,7 +12,7 @@ Requisitos:
 > http://universities.hipolabs.com/search?country=$country
 
 - Devem ser listadas as universidades dos seguintes países:
-`["argentina","brasil","chile","colombia" "paraguai","peru","suriname","uruguay"]`
+`["argentina","brasil","chile","colombia","paraguai","peru","suriname","uruguay"]`
 
 - Criar uma collection no MongoDB para armazenar as universidades separadamente.
 
@@ -104,9 +104,26 @@ npm install express
 ```
 
 ```bash
-npm install -D typescript ts-node-dev @types/{node,express}
+npm install axios
+```
+
+```bash
+npm install -D typescript prisma ts-node-dev @types/{node,express}
 ```
 
 ```bash
 npx tsc --init
+```
+
+
+### https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/mongodb-typescript-mongodb
+```bash
+npx prisma init
+```
+```bash
+npm install -D ts-node
+```
+
+```bash
+npm install @prisma/client
 ```
