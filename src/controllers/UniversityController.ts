@@ -102,10 +102,44 @@ export async function addUniversity(req: Request, res: Response) {
     })
 }
 
-export async function updateUniversity() {
+export async function updateUniversity(req: Request, res: Response) {
+    const { id } = req.params
+    const { web_pages, name, domains } = req.body
+
+    try {
+        const updatedUniversity = await db.university.update({
+            where: {
+                id
+            },
+            data: {
+                web_pages,
+                name,
+                domains
+            }
+        })
+
+        return res.status(200).json({
+            message: 'Updated University',
+            updatedUniversity
+        })
+
+    } catch (error) {
+        return res.status(404).json({
+            error: 'University Not Found'
+        })
+    }
 
 }
 
-export async function deleteUniversity() {
+export async function deleteUniversity(req: Request, res: Response) {
+    const { id } = req.params
 
+
+    const deletedUniversity = await db.university.delete({
+        where: {
+            id
+        }
+    })
+
+    return res.status(200).json({ message: 'Deleted University', deletedUniversity })
 }
