@@ -21,7 +21,6 @@ export async function getAllUniversities(req: Request, res: Response) {
         },
         take: 20,
         skip: (Number(page) - 1) * 20,
-
     })
 
     const response = {
@@ -31,4 +30,22 @@ export async function getAllUniversities(req: Request, res: Response) {
     }
 
     res.json(response)
+}
+
+export async function getUniversityById(req: Request, res: Response) {
+    const { id } = req.params
+
+    const university = await db.university.findUnique({
+        where: {
+            id
+        }
+    })
+
+    if (!university) {
+        return res.status(404).json({
+            error: "University Not Found"
+        })
+    }
+
+    res.json(university)
 }

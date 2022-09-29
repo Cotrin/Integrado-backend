@@ -1,7 +1,7 @@
 import { prisma } from "@prisma/client";
 import { Router } from "express";
 
-import { getAllUniversities } from './controllers/UniversityController'
+import { getAllUniversities, getUniversityById } from './controllers/UniversityController'
 
 const routes = Router()
 
@@ -10,6 +10,8 @@ routes.get('/', (req, res) => {
 })
 
 routes.get('/universities', getAllUniversities)
+
+routes.get('/universities/:id', getUniversityById)
 
 
 export default routes
