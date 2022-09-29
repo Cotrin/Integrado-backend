@@ -1,7 +1,7 @@
 import { prisma } from "@prisma/client";
 import { Router } from "express";
 
-import { getAllUniversities, getUniversityById } from './controllers/UniversityController'
+import { addUniversity, deleteUniversity, getAllUniversities, getUniversityById, updateUniversity } from './controllers/UniversityController'
 
 const routes = Router()
 
@@ -12,6 +12,12 @@ routes.get('/', (req, res) => {
 routes.get('/universities', getAllUniversities)
 
 routes.get('/universities/:id', getUniversityById)
+
+routes.post('/universities', addUniversity)
+
+routes.put('/universities/:id', updateUniversity)
+
+routes.delete('/universities/:id', deleteUniversity) 
 
 
 export default routes

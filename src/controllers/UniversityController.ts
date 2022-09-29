@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
 
+import type { University } from '../types/University'
+
 import { db } from '../../prisma'
 
 
@@ -48,4 +50,62 @@ export async function getUniversityById(req: Request, res: Response) {
     }
 
     res.json(university)
+}
+
+export async function addUniversity(req: Request, res: Response) {
+    const { alpha_two_code, web_pages, name, country, domains, state_province } = req.body
+
+    // Validations
+    if (!alpha_two_code || !web_pages || !name || !country || !domains) {
+        return res.status(400).json({
+            error: 'Missing required information',
+            alpha_two_code: alpha_two_code ?? null,
+            web_pages: web_pages ?? null,
+            name: name ?? null,
+            country: country ?? null,
+            domains: domains ?? null,
+        })
+    }
+
+    if (alpha_two_code.length !== 2) {
+        return res.status(400).json({ error: 'Country abbreviation needs to be 2 characters long' })
+    }
+
+    const alreadyExists = await db.university.findFirst({
+        where: {
+            country,
+            state_province,
+            name,
+        }
+    })
+
+    if (alreadyExists) {
+        return res.status(400).json({ error: 'University already exists' })
+    }
+
+    const university: University = {
+        alpha_two_code,
+        web_pages,
+        name,
+        country,
+        domains,
+        state_province
+    }
+
+    const newUniversity = await db.university.create({
+        data: university
+    })
+
+    res.status(201).json({
+        message: 'Created University',
+        newUniversity
+    })
+}
+
+export async function updateUniversity() {
+
+}
+
+export async function deleteUniversity() {
+
 }
