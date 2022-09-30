@@ -1,4 +1,3 @@
-import { prisma } from "@prisma/client";
 import { Router } from "express";
 
 import { addUniversity, deleteUniversity, getAllUniversities, getUniversityById, updateUniversity } from './controllers/UniversityController'

@@ -14,7 +14,7 @@ model University {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   alpha_two_code String
   country        String
-  state_province String?
+  state_province String?  @map("state-province")
   domains        String[]
   name           String
   web_pages      String[]

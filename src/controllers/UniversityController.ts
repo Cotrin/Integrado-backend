@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import type { University } from '../types/University'
+import type { University, UniversityResponse } from '../types/University'
 
 import { db } from '../../prisma'
 
@@ -25,9 +25,19 @@ export async function getAllUniversities(req: Request, res: Response) {
         skip: (Number(page) - 1) * 20,
     })
 
+    const sanitizedUniversities = universities.map(university => {
+        return {
+            _id: university.id,
+            name: university.name,
+            country: university.country,
+            'state-province': university.state_province
+        }
+    })
+
+
     const response = {
         page: Number(page),
-        universities,
+        universities: sanitizedUniversities,
         amount: universities.length
     }
 
@@ -49,7 +59,17 @@ export async function getUniversityById(req: Request, res: Response) {
         })
     }
 
-    res.json(university)
+    const sanitizedUniversity: UniversityResponse = {
+        _id: university.id,
+        name: university.name,
+        country: university.country,
+        'state-province': university.state_province,
+        alpha_two_code: university.alpha_two_code,
+        domains: university.domains,
+        web_pages: university.web_pages
+    }
+
+    res.json(sanitizedUniversity)
 }
 
 export async function addUniversity(req: Request, res: Response) {
@@ -96,9 +116,19 @@ export async function addUniversity(req: Request, res: Response) {
         data: university
     })
 
+    const sanitizedUniversity: UniversityResponse = {
+        _id: newUniversity.id,
+        name: newUniversity.name,
+        country: newUniversity.country,
+        'state-province': newUniversity.state_province,
+        alpha_two_code: newUniversity.alpha_two_code,
+        domains: newUniversity.domains,
+        web_pages: newUniversity.web_pages
+    }
+
     res.status(201).json({
         message: 'Created University',
-        newUniversity
+        newUniversity: sanitizedUniversity
     })
 }
 
@@ -118,9 +148,19 @@ export async function updateUniversity(req: Request, res: Response) {
             }
         })
 
+        const sanitizedUniversity: UniversityResponse = {
+            _id: updatedUniversity.id,
+            name: updatedUniversity.name,
+            country: updatedUniversity.country,
+            'state-province': updatedUniversity.state_province,
+            alpha_two_code: updatedUniversity.alpha_two_code,
+            domains: updatedUniversity.domains,
+            web_pages: updatedUniversity.web_pages
+        }
+
         return res.status(200).json({
             message: 'Updated University',
-            updatedUniversity
+            updatedUniversity: sanitizedUniversity
         })
 
     } catch (error) {
@@ -141,5 +181,15 @@ export async function deleteUniversity(req: Request, res: Response) {
         }
     })
 
-    return res.status(200).json({ message: 'Deleted University', deletedUniversity })
+    const sanitizedUniversity: UniversityResponse = {
+        _id: deletedUniversity.id,
+        name: deletedUniversity.name,
+        country: deletedUniversity.country,
+        'state-province': deletedUniversity.state_province,
+        alpha_two_code: deletedUniversity.alpha_two_code,
+        domains: deletedUniversity.domains,
+        web_pages: deletedUniversity.web_pages
+    }
+
+    return res.status(200).json({ message: 'Deleted University', deletedUniversity: sanitizedUniversity })
 }

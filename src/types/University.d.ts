@@ -1,4 +1,5 @@
 export interface UniversityResponse {
+    _id?: string;
     alpha_two_code: string;
     country: string;
     'state-province'?: string;

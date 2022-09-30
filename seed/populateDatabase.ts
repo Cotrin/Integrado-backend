@@ -40,9 +40,6 @@ async function populateDatabase() {
 
   console.log('Database Populated!')
 
-  // connect to mongodb
-  await db.$disconnect()
-
 }
 
 populateDatabase()

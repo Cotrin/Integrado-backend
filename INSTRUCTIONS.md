@@ -127,3 +127,7 @@ npm install -D ts-node
 ```bash
 npm install @prisma/client
 ```
+
+```bash
+npm i -D @swc/core
+```
