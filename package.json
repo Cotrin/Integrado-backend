@@ -7,7 +7,7 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "tsnd --ignore-watch node_modules --transpile-only src/server.ts",
-    "populate-database": "ts-node seed/populateDatabase.ts"
+    "populate-database": "npx prisma generate && ts-node seed/populateDatabase.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",
